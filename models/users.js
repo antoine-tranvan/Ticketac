@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var myLastTrips = mongoose.Schema({
   departure: String,
   arrival: String,
-  date: Date,
+  date: String,
   departureTime: String,
   price: Number,
 });
