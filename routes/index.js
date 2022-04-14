@@ -53,6 +53,8 @@ var date = [
   "2018-11-24",
 ];
 
+var orders = [];
+
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
@@ -83,24 +85,53 @@ router.get("/save", async function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-// Cette route est juste une verification du Save.
-// Vous pouvez choisir de la garder ou la supprimer.
-router.get("/result", function (req, res, next) {
-  // Permet de savoir combien de trajets il y a par ville en base
-  for (i = 0; i < city.length; i++) {
-    journeyModel.find(
-      { departure: city[i] }, //filtre
+router.get("/homepage", function (req, res, next) {
+  res.render("homepage", { title: "Express" });
+});
 
-      function (err, journey) {
-        console.log(
-          `Nombre de trajets au départ de ${journey[0].departure} : `,
-          journey.length
-        );
-      }
-    );
+router.post("/results", async function (req, res, next) {
+  console.log(req.body.cityDepartureFromFront);
+
+  var journey = await journeyModel.find({
+    departure: req.body.cityDepartureFromFront,
+    arrival: req.body.cityArrivalFromFront,
+    date: req.body.dateFromFront,
+  });
+
+  console.log(journey);
+
+  res.render("results", { journey: journey });
+});
+
+router.get("/homepage", function (req, res, next) {
+  res.render("homepage", { title: "Express" });
+});
+
+router.get("/orders", function (req, res, next) {
+  var totalAmount = 0;
+  var date = new Date(req.query.date).toLocaleDateString();
+
+  orders.push({
+    departure: req.query.departure,
+    arrival: req.query.arrival,
+    date: date,
+    departureTime: req.query.departureTime,
+    price: req.query.price,
+  });
+  console.log(orders);
+
+  for (var i = 0; i < orders.length; i++) {
+    price = Number(orders[i].price);
+    totalAmount = totalAmount + price;
   }
 
-  res.render("index", { title: "Express" });
+  console.log(totalAmount);
+
+  res.render("orders", { orders: orders, totalAmount });
+});
+
+router.get("/lasttrip", function (req, res, next) {
+  res.render("lasttrip", { title: "Express" });
 });
 
 module.exports = router;

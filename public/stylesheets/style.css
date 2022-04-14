@@ -1,8 +1,86 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.corps {
+  background: linear-gradient(to bottom, #c9e0e9, #3182b4);
+  height: 100vh;
+  width: 100vw;
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+.banner {
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ecf0f1;
+  padding: 10px;
+}
+
+img {
+  height: 30px;
+}
+
+.landmark {
+  height: 300px;
+  margin-top: 75px;
+}
+
+.ticketac {
+  margin-left: 10px;
+}
+
+.hyperlien {
+  margin-right: 40px;
+  margin-left: 4px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.titleForm {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  color: white;
+  text-align: left;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.bandeau {
+  background-color: white;
+  width: 100vw;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.bandeau2 {
+  width: 100vw;
+  height: 300px;
+  margin-bottom: 10px;
+}
+
+.buttonGo {
+  margin-left: 5px;
+}
+
+.table {
+  background-color: white;
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Results</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <nav class="banner">
+      <div>
+        <img src="/images/train.png" /><span class="ticketac">Ticketac</span>
+      </div>
+      <div>
+        <span class="hyperlien">Connection</span>
+        <span class="hyperlien">My last trip</span>
+      </div>
+    </nav>
+
+    <!-- body -->
+    <div
+      class="corps d-flex flex-column justify-content-start align-items-center"
+    >
+      <div class="row col-8">
+        <div class="text-center mt-20">
+          <h4 class="titleForm">Tickets available on <% var date=new Date(journey[0].date).toLocaleDateString()%> <%=date%> :</h4>
+        </div>
+
+        <% for (var i = 0; i<journey.length; i++) {%>
+        <div
+          class="bandeau text-center mt-20 d-flex justify-content-around align-items-center"
+        >
+          <div><%=journey[i].departure%> / <%=journey[i].arrival%></div>
+          <div>train departure at: <%=journey[i].departureTime%></div>
+          <div><%=journey[i].price%> € <span class="buttonGo">
+            <a href="/orders?departure=<%=journey[i].departure%>&arrival=<%=journey[i].arrival%>&date=<%=journey[i].date%>&departureTime=<%=journey[i].departureTime%>&price=<%=journey[i].price%>"><button type="submit" class="btn btn-danger mt-2">Ok</button>
+            </a></span></div>
+          </div>
+        <%}%>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
