@@ -162,7 +162,7 @@ router.post('/sign-up', async function(req,res,next){
   
     console.log(req.session.user)
   
-    res.redirect('/homepage') // Il faut la créer
+    res.redirect('/homepage') 
   } else {
     res.redirect('/')
   }
@@ -181,18 +181,15 @@ router.post('/sign-in', async function(req,res,next){
       name: searchUser.firstname,
       id: searchUser._id
     }
-    res.redirect('/homepage') // Il faut la créer
+    res.redirect('/homepage') 
   } else {
     res.render('signin')
   }
-
-  
 });
 
-router.get('/popup', async function(req,res,next){
-res.render('popup')
+router.get("/congrat", function (req, res, next) {
+  res.render("congrat");
 });
-
 
 
 module.exports = router;
