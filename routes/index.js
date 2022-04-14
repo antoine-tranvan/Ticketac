@@ -3,6 +3,8 @@ var router = express.Router();
 
 const mongoose = require("mongoose");
 
+var userModel = require('../models/users')
+
 // useNewUrlParser ;)
 var options = {
   connectTimeoutMS: 5000,
@@ -55,7 +57,7 @@ var date = [
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+  res.render("signin");
 });
 
 // Remplissage de la base de donnée, une fois suffit
@@ -102,5 +104,64 @@ router.get("/result", function (req, res, next) {
 
   res.render("index", { title: "Express" });
 });
+
+//route des SignIn & SignUp
+// Faire popup erreur déjà inscrit
+
+router.post('/sign-up', async function(req,res,next){
+
+  var searchUser = await userModel.findOne({
+    email: req.body.emailFromFront
+  })
+  
+  if(!searchUser){
+    var newUser = new userModel({
+      firstname: req.body.firstNameFromFront,
+      lastname: req.body.lastNameFromFront,
+      email: req.body.emailFromFront,
+      password: req.body.passwordFromFront,
+    })
+  
+    var newUserSave = await newUser.save();
+  
+    req.session.user = {
+      name: newUserSave.firstname,
+      id: newUserSave._id,
+    }
+  
+    console.log(req.session.user)
+  
+    res.redirect('/homepage') // Il faut la créer
+  } else {
+    res.redirect('/')
+  }
+  
+});
+
+router.post('/sign-in', async function(req,res,next){
+
+  var searchUser = await userModel.findOne({
+    email: req.body.emailFromFront,
+    password: req.body.passwordFromFront
+  })
+
+  if(searchUser!= null){
+    req.session.user = {
+      name: searchUser.firstname,
+      id: searchUser._id
+    }
+    res.redirect('/homepage') // Il faut la créer
+  } else {
+    res.render('signin')
+  }
+
+  
+});
+
+router.get('/popup', async function(req,res,next){
+res.render('popup')
+});
+
+
 
 module.exports = router;
