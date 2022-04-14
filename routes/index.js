@@ -159,19 +159,11 @@ router.post("/sign-up", async function (req, res, next) {
     req.session.user = {
       name: newUserSave.firstname,
       id: newUserSave._id,
-<<<<<<< HEAD
     };
 
     console.log(req.session.user);
 
     res.redirect("/homepage"); // Il faut la créer
-=======
-    }
-  
-    console.log(req.session.user)
-  
-    res.redirect('/homepage') 
->>>>>>> d8c2a0bae9408f2ccff025e835e431e940ab5a5c
   } else {
     res.redirect("/");
   }
@@ -186,31 +178,17 @@ router.post("/sign-in", async function (req, res, next) {
   if (searchUser != null) {
     req.session.user = {
       name: searchUser.firstname,
-<<<<<<< HEAD
       id: searchUser._id,
     };
     console.log(req.session.user.name);
     res.redirect("/homepage"); // Il faut la créer
-=======
-      id: searchUser._id
-    }
-    res.redirect('/homepage') 
->>>>>>> d8c2a0bae9408f2ccff025e835e431e940ab5a5c
   } else {
     res.render("signin");
   }
 });
 
-<<<<<<< HEAD
-router.get("/popup", async function (req, res, next) {
-  res.render("popup");
-});
-
-=======
 router.get("/congrat", function (req, res, next) {
   res.render("congrat");
 });
 
-
->>>>>>> d8c2a0bae9408f2ccff025e835e431e940ab5a5c
 module.exports = router;
