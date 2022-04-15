@@ -119,7 +119,6 @@ router.post("/results", async function (req, res, next) {
   });
 
   console.log(journey);
-
   if (journey.length == 0) {
     res.render("oups", { name: req.session.user.name });
   } else {
@@ -133,7 +132,9 @@ router.post("/results", async function (req, res, next) {
 });
 
 router.get("/orders", function (req, res, next) {
-  req.session.orders = [];
+  if (req.session.orders == undefined) {
+    req.session.orders = [];
+  }
 
   req.session.totalAmount = 0;
 
@@ -292,11 +293,13 @@ router.post("/create-checkout-session", async (req, res) => {
 
 router.get('/delete-line', function (req, res, next) {
 
-  if (req.session.orders == undefined) {
-    req.session.orders = [];
-  }
+  // if (req.session.orders == undefined) {
+  //   req.session.orders = [];
+  // }
 
   req.session.orders.splice(req.query.position, 1)
+
+  req.session.totalAmount = 0;
 
   for (var i = 0; i < req.session.orders.length; i++) {
     price = Number(req.session.orders[i].price);

@@ -30,15 +30,20 @@
       <div class="row col-8">
         <div class="text-center mt-20">
           <h4 class="titleForm">Tickets available on <% var date=new Date(journey[0].date).toLocaleDateString()%> <%=date%> :</h4>
+          <h5 class="alert alert-info" role="alert">La Météo à <strong><%=journey[0].arrival%></strong> : <%= description%> <img src="<%=img%>"></h5>
         </div>
 
         <% for (var i = 0; i<journey.length; i++) {%>
+          <% var date = journey[i].departureTime.split(':')
+          var AMPM = "AM"
+          date[0]= Number(date[0])
+          if(date[0] >= 12) {AMPM="PM"}
+           %> 
         <div
           class="bandeau text-center mt-20 d-flex justify-content-around align-items-center"
         >
           <div><%=journey[i].departure%> / <%=journey[i].arrival%></div>
-          <div> Météo à l'arrivée : <%= description%> <img src="<%=img%>"></div>
-          <div>train departure at: <%=journey[i].departureTime%></div>
+          <div>train departure at: <%=journey[i].departureTime%> <%= AMPM%></div>
           <div><%=journey[i].price%> € <span class="buttonGo">
             <a href="/orders?departure=<%=journey[i].departure%>&arrival=<%=journey[i].arrival%>&date=<%=journey[i].date%>&departureTime=<%=journey[i].departureTime%>&price=<%=journey[i].price%>"><button type="submit" class="btn btn-danger mt-2">Je le veux !</button>
             </a></span></div>
