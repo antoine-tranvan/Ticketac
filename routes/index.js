@@ -98,10 +98,20 @@ router.get("/save", async function (req, res, next) {
 });
 
 router.get("/homepage", function (req, res, next) {
-  res.render("homepage", { name: req.session.user.name });
+
+  res.render("homepage", { name: req.session.user.name ,city });
 });
 
 router.post("/results", async function (req, res, next) {
+// formatage 1ère lettre Maj
+console.log("retour du form", req.body)
+var updatedDeparture = req.body.cityDepartureFromFront.charAt(0).toUpperCase()+req.body.cityDepartureFromFront.slice(1).toLowerCase()
+var updatedArrival = req.body.cityArrivalFromFront.charAt(0).toUpperCase()+req.body.cityArrivalFromFront.slice(1).toLowerCase()
+
+console.log( updatedDeparture, updatedArrival,)
+
+
+
   var requete = request(
     "GET",
     `https://api.openweathermap.org/data/2.5/weather?q=${req.body.cityArrivalFromFront}&units=metric&lang=fr&appid=0c815b9455235455a301668a56c67b18`
@@ -113,8 +123,8 @@ router.post("/results", async function (req, res, next) {
     "http://openweathermap.org/img/wn/" + dataAPI.weather[0].icon + ".png";
 
   var journey = await journeyModel.find({
-    departure: req.body.cityDepartureFromFront,
-    arrival: req.body.cityArrivalFromFront,
+    departure: updatedDeparture,
+    arrival: updatedArrival,
     date: req.body.dateFromFront,
   });
 
@@ -210,7 +220,7 @@ router.post("/sign-in", async function (req, res, next) {
       id: searchUser._id,
     };
     console.log(req.session.user.name);
-    res.render("homepage", { name: req.session.user.name }); // Il faut la créer
+    res.render("homepage", { name: req.session.user.name, city }); // Il faut la créer
   } else {
     emailAlreadyExist = false;
     res.render("signin", {
