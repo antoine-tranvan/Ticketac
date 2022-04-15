@@ -47,11 +47,16 @@
             </thead>
             <tbody>
                 <% for (var i=0; i<orders.length;i++) {%>
+                  <% var date = orders[i].departureTime.split(':')
+                  var AMPM = "AM"
+                  date[0]= Number(date[0])
+                  if(date[0] >= 12) {AMPM="PM"}
+                   %> 
                     <tr>
                         <th scope="row"><%=i+1%></th>
                         <td><%=orders[i].departure%> / <%=orders[i].arrival%></td>
                         <td><%=orders[i].date%></td>
-                        <td><%=orders[i].departureTime%></td>
+                        <td><%=orders[i].departureTime%> <%=AMPM%></td>
                         <td><%=orders[i].price%>€</td>
                     </tr>
                 <%}%>
