@@ -161,7 +161,8 @@ router.post('/sign-up', async function(req,res,next){
     }
   
     console.log(req.session.user)
-  
+
+  //ici config du popup
     res.redirect('/homepage') 
   } else {
     res.redirect('/')
@@ -175,20 +176,25 @@ router.post('/sign-in', async function(req,res,next){
     email: req.body.emailFromFront,
     password: req.body.passwordFromFront
   })
-
+ //ici config du popup
   if(searchUser!= null){
     req.session.user = {
       name: searchUser.firstname,
       id: searchUser._id
     }
     res.redirect('/homepage') 
-  } else {
-    res.render('signin')
+  } else { 
+    res.render('/')
   }
 });
 
 router.get("/congrat", function (req, res, next) {
   res.render("congrat");
+});
+
+ //ici config du popup
+router.get("/signin", function (req, res, next) { 
+  res.render( "/");
 });
 
 

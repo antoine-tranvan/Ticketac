@@ -1,43 +1,52 @@
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Votre récapitulatif de commande</h5>
-            <div class="modal-body">
-                <table class="table ">
-                    <thead>
-                      <tr>
-                        <th scope="col">N°</th>
-                        <th scope="col">Journey</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Departure time</th>
-                        <th scope="col">Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        <% for (var i=0; i<orders.length;i++) {%>
-                            <tr>
-                                <th scope="row"><%=i+1%></th>
-                                <td><%=orders[i].departure%> / <%=orders[i].arrival%></td>
-                                <td><%=orders[i].date%></td>
-                                <td><%=orders[i].departureTime%></td>
-                                <td><%=orders[i].price%>€</td>
-                            </tr>
-                        <%}%>
-                        <tr class="table-info">
-                            <th>Total</td> 
-                                <th></td> 
-                                    <th></td>
-                                        <th></td>
-                            <td><%=totalAmount%> €</td> 
-                        </tr>
+          <h5 class="modal-title" id="exampleModalLabel">Récapitulatif de votre Commande</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+
+            <!-- début tableau -->
+
+            <table class="table table-success table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">N°</th>
+                    <th scope="col">Journey</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Departure time</th>
+                    <th scope="col">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% for (var i=0; i<orders.length;i++) {%>
+                        <tr>
+                            <th scope="row"><%=i+1%></th>
+                            <td><%=orders[i].departure%> / <%=orders[i].arrival%></td>
+                            <td><%=orders[i].date%></td>
+                            <td><%=orders[i].departureTime%></td>
+                            <td><%=orders[i].price%>€</td>
+                        </tr>
+                    <%}%>
+                    <tr class="table-info">
+                        <th>Total</td> 
+                            <th></td> 
+                                <th></td>
+                                    <th></td>
+                        <td><%=totalAmount%> €</td> 
+                    </tr>
+                    
+                </tbody>
+              </table>
+              <!-- fin tableau -->
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-          <a href="/homepage"> <button type="button" class="btn btn-primary">Valider !</button></a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Return</button>
+          <a href="/congrat"> <button type="button" class="btn btn-primary">Payer !</button></a>
         </div>
       </div>
     </div>
