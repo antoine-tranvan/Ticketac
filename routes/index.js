@@ -1,6 +1,14 @@
 var express = require("express");
 var router = express.Router();
 
+//Paiement Stripe avec la clé test
+const Stripe = require('stripe');
+const stripe = Stripe
+('sk_test_51KjgSIHcg7XvrheRJClDBL19gJoFUlgAAOn0doHwgmNB8d3HNZ21icf1eWMBA5qB8nvX4t94m4Lj3TPREqnxkU8K00RmPepE1j')
+
+
+
+
 const mongoose = require("mongoose");
 
 var userModel = require("../models/users");
@@ -236,6 +244,37 @@ router.get("/congrat", async function (req, res, next) {
  //ici config du popup
 router.get("/signin", function (req, res, next) { 
   res.render( "/");
+});
+
+// route du paiement Stripe
+
+router.post('/create-checkout-session', async (req, res) => {
+
+  var stripeItems = [];
+
+  for (var i = 0; i < req.session.orders.length; i++) {
+    stripeItems.push({
+      price_data: {
+        currency: 'eur',
+        product_data: {
+          name: `${req.session.orders[i].departure} / ${req.session.orders[i].arrival}`
+        },
+        unit_amount: req.session.orders[i].price * 100,
+      },
+      quantity: 1,
+    });
+  }
+  
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: stripeItems,
+    mode: "payment",
+    success_url: "http://localhost:3000/congrat",
+    cancel_url: "http://localhost:3000/",
+  });
+
+  res.redirect(303, session.url);
 });
 
 
