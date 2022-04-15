@@ -98,19 +98,20 @@ router.get("/save", async function (req, res, next) {
 });
 
 router.get("/homepage", function (req, res, next) {
-
-  res.render("homepage", { name: req.session.user.name ,city });
+  res.render("homepage", { name: req.session.user.name, city });
 });
 
 router.post("/results", async function (req, res, next) {
-// formatage 1ère lettre Maj
-console.log("retour du form", req.body)
-var updatedDeparture = req.body.cityDepartureFromFront.charAt(0).toUpperCase()+req.body.cityDepartureFromFront.slice(1).toLowerCase()
-var updatedArrival = req.body.cityArrivalFromFront.charAt(0).toUpperCase()+req.body.cityArrivalFromFront.slice(1).toLowerCase()
+  // formatage 1ère lettre Maj
+  console.log("retour du form", req.body);
+  var updatedDeparture =
+    req.body.cityDepartureFromFront.charAt(0).toUpperCase() +
+    req.body.cityDepartureFromFront.slice(1).toLowerCase();
+  var updatedArrival =
+    req.body.cityArrivalFromFront.charAt(0).toUpperCase() +
+    req.body.cityArrivalFromFront.slice(1).toLowerCase();
 
-console.log( updatedDeparture, updatedArrival,)
-
-
+  console.log(updatedDeparture, updatedArrival);
 
   var requete = request(
     "GET",
@@ -203,7 +204,7 @@ router.post("/sign-up", async function (req, res, next) {
 
     console.log(req.session.user);
 
-    res.render("homepage", { name: req.session.user.name }); // Il faut la créer
+    res.render("homepage", { name: req.session.user.name, city }); // Il faut la créer
   } else {
     userAlreadyExist = true;
     emailAlreadyExist = true;
