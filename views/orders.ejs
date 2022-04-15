@@ -9,6 +9,7 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <script src="https://kit.fontawesome.com/a41e9403cf.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <!-- HEADER -->
@@ -53,6 +54,7 @@
                         <td><%=orders[i].date%></td>
                         <td><%=orders[i].departureTime%></td>
                         <td><%=orders[i].price%>€</td>
+                        <td><a href="/delete-line?position=<%=i%>"><button type="button" class="btn btn-outline-info"><i class="far fa-trash-alt"></i></button></a></td>
                     </tr>
                 <%}%>
                 <tr class="table-info">

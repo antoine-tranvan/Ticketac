@@ -288,4 +288,22 @@ router.post("/create-checkout-session", async (req, res) => {
   res.redirect(303, session.url);
 });
 
+// suppression ligne panier
+
+router.get('/delete-line', function (req, res, next) {
+
+  if (req.session.orders == undefined) {
+    req.session.orders = [];
+  }
+
+  req.session.orders.splice(req.query.position, 1)
+
+  for (var i = 0; i < req.session.orders.length; i++) {
+    price = Number(req.session.orders[i].price);
+    req.session.totalAmount = req.session.totalAmount + price;
+  }
+
+  res.render('orders', { orders: req.session.orders, name: req.session.user.name, totalAmount: req.session.totalAmount})
+})
+
 module.exports = router;
