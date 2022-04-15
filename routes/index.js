@@ -55,9 +55,11 @@ var date = [
   "2018-11-24",
 ];
 
+var userAlreadyExist = false;
+
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("signin");
+  res.render("signin", { userAlreadyExist: userAlreadyExist });
 });
 
 // Remplissage de la base de donnée, une fois suffit
@@ -180,7 +182,8 @@ router.post("/sign-up", async function (req, res, next) {
 
     res.render("homepage", { name: req.session.user.name }); // Il faut la créer
   } else {
-    res.redirect("/");
+    userAlreadyExist = true;
+    res.render("signin", { userAlreadyExist: userAlreadyExist });
   }
 });
 
@@ -198,7 +201,7 @@ router.post("/sign-in", async function (req, res, next) {
     console.log(req.session.user.name);
     res.render("homepage", { name: req.session.user.name }); // Il faut la créer
   } else {
-    res.render("signin");
+    res.render("signin", { userAlreadyExist: userAlreadyExist });
   }
 });
 
