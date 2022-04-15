@@ -14,11 +14,12 @@
     <!-- HEADER -->
     <nav class="banner">
       <div>
-        <img src="/images/train.png" /><span class="ticketac">Ticketac</span>
+        <a href="/homepage"><img src="/images/train.png" /><span class="ticketac">Ticketac</span></a>
       </div>
       <div>
         <span class="hyperlien"><span>&#129312;</span> Hello <%=name%> !</span>
-        <span class="hyperlien">My last trip</span>
+        <a href="/lasttrip"><span class="hyperlien">My last trips</span></a>
+        <a href="/logout"><span class="hyperlien">Déconnexion</span></a>
       </div>
     </nav>
 
@@ -36,9 +37,10 @@
           class="bandeau text-center mt-20 d-flex justify-content-around align-items-center"
         >
           <div><%=journey[i].departure%> / <%=journey[i].arrival%></div>
+          <div> Météo à l'arrivée : <%= description%> <img src="<%=img%>"></div>
           <div>train departure at: <%=journey[i].departureTime%></div>
           <div><%=journey[i].price%> € <span class="buttonGo">
-            <a href="/orders?departure=<%=journey[i].departure%>&arrival=<%=journey[i].arrival%>&date=<%=journey[i].date%>&departureTime=<%=journey[i].departureTime%>&price=<%=journey[i].price%>"><button type="submit" class="btn btn-danger mt-2">Ok</button>
+            <a href="/orders?departure=<%=journey[i].departure%>&arrival=<%=journey[i].arrival%>&date=<%=journey[i].date%>&departureTime=<%=journey[i].departureTime%>&price=<%=journey[i].price%>"><button type="submit" class="btn btn-danger mt-2">Je le veux !</button>
             </a></span></div>
           </div>
         <%}%>

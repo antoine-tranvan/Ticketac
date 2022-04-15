@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 
+var request = require("sync-request");
+
 const mongoose = require("mongoose");
 
 var userModel = require("../models/users");
@@ -55,11 +57,15 @@ var date = [
   "2018-11-24",
 ];
 
-var userAlreadyExist = false;
+var userAlreadyExist;
+var emailAlreadyExist;
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("signin", { userAlreadyExist: userAlreadyExist });
+  res.render("signin", {
+    userAlreadyExist: userAlreadyExist,
+    emailAlreadyExist: emailAlreadyExist,
+  });
 });
 
 // Remplissage de la base de donnée, une fois suffit
@@ -88,15 +94,19 @@ router.get("/save", async function (req, res, next) {
 });
 
 router.get("/homepage", function (req, res, next) {
-  res.render("homepage", { title: "Express" });
-});
-
-router.get("/homepage", function (req, res, next) {
-  res.render("homepage", { title: "Express" });
+  res.render("homepage", { name: req.session.user.name });
 });
 
 router.post("/results", async function (req, res, next) {
-  req.session.orders = [];
+  var requete = request(
+    "GET",
+    `https://api.openweathermap.org/data/2.5/weather?q=${req.body.cityArrivalFromFront}&units=metric&lang=fr&appid=0c815b9455235455a301668a56c67b18`
+  );
+  var dataAPI = JSON.parse(requete.body);
+  console.log(dataAPI);
+  var description = dataAPI.weather[0].description;
+  var img =
+    "http://openweathermap.org/img/wn/" + dataAPI.weather[0].icon + ".png";
 
   var journey = await journeyModel.find({
     departure: req.body.cityDepartureFromFront,
@@ -107,17 +117,20 @@ router.post("/results", async function (req, res, next) {
   console.log(journey);
 
   if (journey.length == 0) {
-    res.render("oups");
+    res.render("oups", { name: req.session.user.name });
   } else {
-    res.render("results", { journey: journey, name: req.session.user.name });
+    res.render("results", {
+      journey: journey,
+      name: req.session.user.name,
+      description,
+      img,
+    });
   }
 });
 
-router.get("/homepage", function (req, res, next) {
-  res.render("homepage", { title: "Express" });
-});
-
 router.get("/orders", function (req, res, next) {
+  req.session.orders = [];
+
   req.session.totalAmount = 0;
 
   var date = new Date(req.query.date).toLocaleDateString();
@@ -129,7 +142,6 @@ router.get("/orders", function (req, res, next) {
     departureTime: req.query.departureTime,
     price: req.query.price,
   });
-  console.log(req.session.orders);
 
   for (var i = 0; i < req.session.orders.length; i++) {
     price = Number(req.session.orders[i].price);
@@ -143,16 +155,6 @@ router.get("/orders", function (req, res, next) {
     totalAmount: req.session.totalAmount,
     name: req.session.user.name,
   });
-});
-
-router.get("/lasttrip", function (req, res, next) {
-  res.render("lasttrip", { title: "Express" });
-});
-
-router.get("/logout", function (req, res, next) {
-  req.session.users = null;
-  req.session.orders = null;
-  res.redirect("/");
 });
 
 //route des SignIn & SignUp
@@ -183,7 +185,11 @@ router.post("/sign-up", async function (req, res, next) {
     res.render("homepage", { name: req.session.user.name }); // Il faut la créer
   } else {
     userAlreadyExist = true;
-    res.render("signin", { userAlreadyExist: userAlreadyExist });
+    emailAlreadyExist = true;
+    res.render("signin", {
+      userAlreadyExist: userAlreadyExist,
+      emailAlreadyExist: emailAlreadyExist,
+    });
   }
 });
 
@@ -201,42 +207,52 @@ router.post("/sign-in", async function (req, res, next) {
     console.log(req.session.user.name);
     res.render("homepage", { name: req.session.user.name }); // Il faut la créer
   } else {
-    res.render("signin", { userAlreadyExist: userAlreadyExist });
+    emailAlreadyExist = false;
+    res.render("signin", {
+      userAlreadyExist: userAlreadyExist,
+      emailAlreadyExist: emailAlreadyExist,
+    });
   }
 });
 
 router.get("/congrat", async function (req, res, next) {
-  console.log("session orders");
-  console.log(req.session.orders);
+  if (req.session.user.id) {
+    var user = await userModel.findById(req.session.user.id);
 
-  var user = await userModel.findById(req.session.user.id);
-  var date = new Date(20 / 11 / 2018);
+    for (var i = 0; i < req.session.orders.length; i++) {
+      user.myLastTrips.push({
+        departure: req.session.orders[i].departure,
+        arrival: req.session.orders[i].arrival,
+        date: req.session.orders[i].date,
+        departureTime: req.session.orders[i].departureTime,
+        price: Number(req.session.orders[i].price),
+      });
+    }
 
-  console.log(user);
-  console.log(user.myLastTrips);
-
-  for (var i = 0; i < req.session.orders.length; i++) {
-    var transform = req.session.orders[i].date.split("/");
-    var date = new Date(transform[2], transform[1], transform[0]);
-    console.log(date);
-    console.log(typeof date);
-    user.myLastTrips.push({
-      departure: req.session.orders[i].departure,
-      arrival: req.session.orders[i].arrival,
-      date: date,
-      departureTime: req.session.orders[i].departureTime,
-      price: Number(req.session.orders[i].price),
-    });
+    var userSaved = await user.save();
   }
 
-  var userSaved = await user.save();
-  res.render("congrat");
+  res.render("congrat", { name: req.session.user.name });
 });
 
- //ici config du popup
-router.get("/signin", function (req, res, next) { 
-  res.render( "/");
+router.get("/lasttrip", async function (req, res, next) {
+  if (req.session.user.id) {
+    var user = await userModel.findById(req.session.user.id);
+    var mytrips = user.myLastTrips;
+    console.log(mytrips);
+    res.render("lasttrip", {
+      renderdemytrips: mytrips,
+      name: req.session.user.name,
+    });
+  } else {
+    res.render("signin", { userAlreadyExist: userAlreadyExist });
+  }
 });
 
+router.get("/logout", async function (req, res, next) {
+  req.session.user = null;
+  req.session.orders = null;
+  res.redirect("/");
+});
 
 module.exports = router;

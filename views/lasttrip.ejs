@@ -14,11 +14,12 @@
     <!-- HEADER -->
     <nav class="banner">
       <div>
-        <img src="/images/train.png" /><span class="ticketac">Ticketac</span>
+        <a href="/homepage"><img src="/images/train.png" /><span class="ticketac">Ticketac</span></a>
       </div>
       <div>
-        <span class="hyperlien">Connection</span>
-        <span class="hyperlien">My last trip</span>
+        <span class="hyperlien"><span>&#129312;</span> Hello <%=name%> !</span>
+        <a href="/lasttrip"><span class="hyperlien">My last trips</span></a>
+        <a href="/logout"><span class="hyperlien">Déconnexion</span></a>
       </div>
     </nav>
 
@@ -44,16 +45,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row"></th>
-                <td>/</td>
-                <td></td>
-                <td></td>
+              <% for (var i=0;i<renderdemytrips.length;i++) {;%>
+                <th scope="row"><%=renderdemytrips[i].date%></th>
+                <td><%=renderdemytrips[i].departure%> / <%=renderdemytrips[i].arrival%></td>
+                <td><%=renderdemytrips[i].departureTime%></td>
+                <td><%=renderdemytrips[i].price%></td>
               </tr>
+              <%}%>
+              <tr>
+
             </tbody>
           </table>
           <div class="button align-self-end">
-            <button type="submit" class="btn btn-danger mt-2 w-20">Home</button>
+            <a href="/homepage"><button type="submit" class="btn btn-danger mt-2 w-20">Home</button></a>
           </div>
         </div>
       </div>

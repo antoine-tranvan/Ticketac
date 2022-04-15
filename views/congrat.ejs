@@ -11,26 +11,37 @@
     />
   </head>
   <body>
-      <!-- HEADER -->
-      <nav class="banner">
-          <div>
-              <img src="/images/train.png" /><span class="ticketac">Ticketac</span>
-            </div>
-            <div>
-                <span class="hyperlien">Connection</span>
-                <span class="hyperlien">My last trip</span>
-            </div>
-        </nav>
-        <div
-        class="corps d-flex flex-column justify-content-start align-items-center"
-      >
-
-      
+    <!-- HEADER -->
+    <nav class="banner">
+      <div>
+        <a href="/homepage"
+          ><img src="/images/train.png" /><span class="ticketac"
+            >Ticketac</span
+          ></a
+        >
+      </div>
+      <div>
+        <span class="hyperlien"><span>&#129312;</span> Hello <%=name%> !</span>
+        <a href="/lasttrip"><span class="hyperlien">My last trips</span></a>
+        <a href="/logout"><span class="hyperlien">Déconnexion</span></a>
+      </div>
+    </nav>
+    <div
+      class="corps d-flex flex-column justify-content-start align-items-center"
+    >
       <div><img class="landmark" src="/images/landmark.png" /></div>
-      <h1>Félicitations ! Vous venez de réserver un Train de 2018... !</h1>
-      <a href="/homepage"><button type="submit" class="btn btn-danger mt-2">HomePage</button></a>
+      <h1>Félicitations <strong><%=name%></strong> !</h1>
+      <div>Vous venez de réserver un Train de 2018... !</div>
+
+      <a href="/homepage"
+        ><button type="submit" class="btn btn-danger mt-2">HomePage</button></a
+      >
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
