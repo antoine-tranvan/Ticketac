@@ -14,6 +14,10 @@
     "http-errors": "~1.6.2",
     "mongoose": "^5.13.14",
     "morgan": "~1.9.0",
+<<<<<<< HEAD
     "sync-request": "^6.1.0"
+=======
+    "stripe": "^8.217.0"
+>>>>>>> 633f18e16d5eeea9acfddfb2b1e35aeb9b05ec85
   }
 }
