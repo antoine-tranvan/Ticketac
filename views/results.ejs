@@ -45,7 +45,7 @@
           <div><%=journey[i].departure%> / <%=journey[i].arrival%></div>
           <div>train departure at: <%=journey[i].departureTime%> <%= AMPM%></div>
           <div><%=journey[i].price%> € <span class="buttonGo">
-            <a href="/orders?departure=<%=journey[i].departure%>&arrival=<%=journey[i].arrival%>&date=<%=journey[i].date%>&departureTime=<%=journey[i].departureTime%>&price=<%=journey[i].price%>"><button type="submit" class="btn btn-danger mt-2">Je le veux !</button>
+            <a href="/orders?id=<%=journey[i]._id%>&departure=<%=journey[i].departure%>&arrival=<%=journey[i].arrival%>&date=<%=journey[i].date%>&departureTime=<%=journey[i].departureTime%>&price=<%=journey[i].price%>"><button type="submit" class="btn btn-danger mt-2">Je le veux !</button>
             </a></span></div>
           </div>
         <%}%>

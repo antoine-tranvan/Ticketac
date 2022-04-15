@@ -138,6 +138,12 @@ router.get("/orders", function (req, res, next) {
 
   req.session.totalAmount = 0;
 
+  for (var i = 0; i < req.session.orders.length; i++) {
+    if (req.session.orders._id == req.query._id) {
+      var Al;
+    }
+  }
+
   var date = new Date(req.query.date).toLocaleDateString();
 
   req.session.orders.push({
@@ -291,13 +297,12 @@ router.post("/create-checkout-session", async (req, res) => {
 
 // suppression ligne panier
 
-router.get('/delete-line', function (req, res, next) {
-
+router.get("/delete-line", function (req, res, next) {
   // if (req.session.orders == undefined) {
   //   req.session.orders = [];
   // }
 
-  req.session.orders.splice(req.query.position, 1)
+  req.session.orders.splice(req.query.position, 1);
 
   req.session.totalAmount = 0;
 
@@ -306,7 +311,11 @@ router.get('/delete-line', function (req, res, next) {
     req.session.totalAmount = req.session.totalAmount + price;
   }
 
-  res.render('orders', { orders: req.session.orders, name: req.session.user.name, totalAmount: req.session.totalAmount})
-})
+  res.render("orders", {
+    orders: req.session.orders,
+    name: req.session.user.name,
+    totalAmount: req.session.totalAmount,
+  });
+});
 
 module.exports = router;

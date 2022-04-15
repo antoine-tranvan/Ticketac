@@ -46,9 +46,14 @@
             </thead>
             <tbody>
               <% for (var i=0;i<renderdemytrips.length;i++) {;%>
+                <% var date = renderdemytrips[i].departureTime.split(':')
+                var AMPM = "AM"
+                date[0]= Number(date[0])
+                if(date[0] >= 12) {AMPM="PM"}
+                 %> 
                 <th scope="row"><%=renderdemytrips[i].date%></th>
                 <td><%=renderdemytrips[i].departure%> / <%=renderdemytrips[i].arrival%></td>
-                <td><%=renderdemytrips[i].departureTime%></td>
+                <td><%=renderdemytrips[i].departureTime%> <%=AMPM%></td>
                 <td><%=renderdemytrips[i].price%></td>
               </tr>
               <%}%>
