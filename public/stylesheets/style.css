@@ -26,7 +26,7 @@ a {
 }
 
 img {
-  height: 30px;
+  height: 40px;
 }
 
 .landmark {
@@ -43,7 +43,7 @@ img {
   margin-left: 4px;
 }
 
-.row {
+.row2 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -84,4 +84,3 @@ img {
 .table {
   background-color: white;
 }
-
