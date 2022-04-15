@@ -1,17 +1,11 @@
 var express = require("express");
 var router = express.Router();
 
-<<<<<<< HEAD
 var request = require("sync-request");
-=======
-//Paiement Stripe avec la clé test
-const Stripe = require('stripe');
-const stripe = Stripe
-('sk_test_51KjgSIHcg7XvrheRJClDBL19gJoFUlgAAOn0doHwgmNB8d3HNZ21icf1eWMBA5qB8nvX4t94m4Lj3TPREqnxkU8K00RmPepE1j')
-
-
-
->>>>>>> 633f18e16d5eeea9acfddfb2b1e35aeb9b05ec85
+const Stripe = require("stripe");
+const stripe = Stripe(
+  "sk_test_51KjgSIHcg7XvrheRJClDBL19gJoFUlgAAOn0doHwgmNB8d3HNZ21icf1eWMBA5qB8nvX4t94m4Lj3TPREqnxkU8K00RmPepE1j"
+);
 
 const mongoose = require("mongoose");
 
@@ -265,27 +259,23 @@ router.get("/logout", async function (req, res, next) {
   res.redirect("/");
 });
 
-<<<<<<< HEAD
-=======
 // route du paiement Stripe
 
-router.post('/create-checkout-session', async (req, res) => {
-
+router.post("/create-checkout-session", async (req, res) => {
   var stripeItems = [];
 
   for (var i = 0; i < req.session.orders.length; i++) {
     stripeItems.push({
       price_data: {
-        currency: 'eur',
+        currency: "eur",
         product_data: {
-          name: `${req.session.orders[i].departure} / ${req.session.orders[i].arrival}`
+          name: `${req.session.orders[i].departure} / ${req.session.orders[i].arrival}`,
         },
         unit_amount: req.session.orders[i].price * 100,
       },
       quantity: 1,
     });
   }
-  
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
@@ -298,6 +288,4 @@ router.post('/create-checkout-session', async (req, res) => {
   res.redirect(303, session.url);
 });
 
-
->>>>>>> 633f18e16d5eeea9acfddfb2b1e35aeb9b05ec85
 module.exports = router;
