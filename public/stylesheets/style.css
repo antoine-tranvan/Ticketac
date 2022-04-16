@@ -43,6 +43,10 @@ img {
   margin-left: 4px;
 }
 
+.row {
+  width: 100%;
+}
+
 .row2 {
   display: flex;
   flex-direction: column;
@@ -85,9 +89,12 @@ img {
   background-color: white;
 }
 
-
-.btn{
-  
+.btn {
   text-align: center;
   padding: auto;
+}
+
+.field {
+  height: 50px;
+  width: 5px;
 }
